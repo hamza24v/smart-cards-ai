@@ -18,7 +18,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <ClerkProvider>
-      <html lang="en" class='h-full'>
+      <html lang="en">
         <body className={inter.className}>
           <header>
             <SignedOut>
