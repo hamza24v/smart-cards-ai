@@ -18,3 +18,25 @@ export const features = [
       "Enjoy a smooth, user-friendly interface with real-time updates and secure access to your study materials.",
   },
 ];
+
+export const pricing = [
+  {
+    title: "Free Plan",
+    price: "0",
+    features: [
+      "Up to 3 Deck of Cards",
+      "Basic AI-powered flashcards",
+      "Up to 5 quiz modes a month"
+    ]
+  },
+  {
+    title: "Pro Plan",
+    price: "9.99",
+    features: [
+      "Unlimited Deck of Cards",
+      "Advanced AI-powered flashcards",
+      "Unlimited quiz modes",
+      "Deck sharing and collaboration",
+    ]
+  },
+]
