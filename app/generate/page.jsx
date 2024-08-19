@@ -1,36 +1,23 @@
-"use client"
+"use client";
 import React, { useState } from "react";
-import FileUploader from '../components/FileUploader'
+import FileUploader from "../components/FileUploader";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 
 function Generate() {
   const [link, setLink] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
-  const [uploadProgress, setUploadProgress] = useState(0);
-  const [uploadStatus, setUploadStatus] = useState("idle");
+  let source;
+  if (link) source = link;
+  else if (selectedFile) source = selectedFile;
 
   const handleFileSelect = (file) => {
     setSelectedFile(file);
-    setUploadStatus("idle");
   };
 
-  const handleUpload = () => {
-    if (selectedFile) {
-      setUploadStatus("uploading");
-      const interval = setInterval(() => {
-        setUploadProgress((prev) => {
-          if (prev >= 100) {
-            clearInterval(interval);
-            setUploadStatus("success");
-            return 100;
-          }
-          return prev + 10;
-        });
-      }, 200);
-    } else if (link) {
-      console.log("processing link...");
-    }
+  const handleGeneration = (content) => {
+    console.log("source: ", content)
+    // api logic 
   };
   return (
     <div className="flex flex-col items-center justify-center min-h-screen space-y-5">
@@ -40,8 +27,6 @@ function Generate() {
       <FileUploader
         onFileSelect={handleFileSelect}
         selectedFile={selectedFile}
-        uploadProgress={uploadProgress}
-        uploadStatus={uploadStatus}
       />
       {selectedFile == null && (
         <TextField
@@ -53,9 +38,13 @@ function Generate() {
           className="w-1/2"
         />
       )}
-      
+
       {(link.length > 0 || selectedFile) && (
-        <Button variant="contained" color="success" onClick={handleUpload}>
+        <Button
+          variant="contained"
+          color="success"
+          onClick={() => handleGeneration(source)}
+        >
           Generate
         </Button>
       )}

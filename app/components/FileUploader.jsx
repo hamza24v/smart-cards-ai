@@ -2,8 +2,10 @@ import React from "react";
 import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
 import { FileInput, Label } from "flowbite-react";
 import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined";
+import CloseIcon from '@mui/icons-material/Close';
 
 function FileUploader({ onFileSelect, selectedFile }) {
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -16,12 +18,13 @@ function FileUploader({ onFileSelect, selectedFile }) {
       {selectedFile ? (
         <div className="flex flex-row items-center p-4 border rounded-lg bg-gray-100 dark:bg-gray-700 border-green-500">
           <InsertDriveFileOutlinedIcon />
-          <div className="flex flex-col ml-5 ">
+          <div className="flex flex-col ml-5 flex-grow">
             <p className="text-md text-gray-900 dark:text-white">
               <strong>{selectedFile.name}</strong>
             </p>
             <p className='text-gray-400 font-mono'>{(selectedFile.size / 1024).toFixed(2)} KB</p>
           </div>
+          <div className="ml-auto cursor-pointer"> <CloseIcon onClick={() => onFileSelect(null)}/></div>
         </div>
       ) : (
         <Label

@@ -1,10 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import ContentUploader from "./ContentUploader";
 import { useRouter } from "next/navigation";
 
 function Hero() {
-  const [showModal, setShowModal] = useState(false);
   const router = useRouter();
 
   return (
@@ -23,7 +21,6 @@ function Hero() {
       >
         Get Started
       </button>
-      <ContentUploader showModal={showModal} setShowModal={setShowModal} />
     </section>
   );
 }
