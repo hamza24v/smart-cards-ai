@@ -15,7 +15,7 @@ function Hero() {
         for you. SmartCards AI adapts to your learning needs, helping you focus
         on what matters most and retain knowledge more effectively.
       </p>
-      <button className='bg-green-400 p-3 rounded-lg hover:scale-105 hover:ring-2' onClick={() => setShowModal(true)}>
+      <button className='bg-green-400 text-white text-xl p-4 bg-gradient-to-r from-green-400 to-green-600 rounded-lg hover:scale-105 hover:ring-2 transition duration-300' onClick={() => setShowModal(true)}>
         Generate Cards
       </button>
       <ContentUploader showModal={showModal} setShowModal={setShowModal}/>

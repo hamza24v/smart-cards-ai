@@ -1,10 +1,10 @@
-"use client"
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { FileInput, Label } from "flowbite-react";
 import TextField from "@mui/material/TextField";
 import CloseIcon from "@mui/icons-material/Close";
 import ClickAwayListener from "@mui/material/ClickAwayListener"; // used to close pop up modal when clicked outside of it
-
+import Button from '@mui/material/Button';
 
 // pop up modal
 function Modal({ children, showModal, setShowModal }) {
@@ -27,14 +27,19 @@ function Modal({ children, showModal, setShowModal }) {
   );
 }
 
+function FileUploader({ onFileSelect }) {
+  const handleFileChange = (event) => {
+    const file = event.target.files[0]; 
+    if (file) {
+      onFileSelect(file); 
+    }
+  };
 
-
-// got this code from flowbite react docs 
-function FileUploader() {
+// got this below code from flowbite react docs
   return (
     <Label
       htmlFor="dropzone-file"
-      className="flex flex-col items-center justify-center w-full h-48 cursor-pointer rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+      className="flex flex-col items-center justify-center w-full mb-5  h-48 cursor-pointer rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
     >
       <div className="flex flex-col items-center justify-center pt-5 pb-6">
         <svg
@@ -60,12 +65,29 @@ function FileUploader() {
           SVG, PNG, JPG or GIF (MAX. 800x400px)
         </p>
       </div>
-      <FileInput id="dropzone-file" className="hidden" />
+      <FileInput
+        id="dropzone-file"
+        className="hidden"
+        onChange={handleFileChange}
+      />
     </Label>
   );
 }
 
 function ContentUploader({ showModal, setShowModal }) {
+  const [link, setLink] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  
+  const handleFileSelect = (file) => {
+    setSelectedFile(file);
+  };
+
+  const handleUpload = () => {
+    if(selectedFile) {
+      console.log("uploading files...", selectedFile)
+    }
+  }
   return (
     <Modal showModal={showModal} setShowModal={setShowModal}>
       <h1 className="text-3xl font-bold mb-6 text-center text-gray-900 dark:text-white">
@@ -74,11 +96,22 @@ function ContentUploader({ showModal, setShowModal }) {
       <TextField
         id="outlined-link-input"
         label="Enter link"
+        value={link}
+        onChange={(e) => {
+          setLink(e.target.value);
+        }}
         type="link"
         variant="outlined"
         className="w-full mb-6"
       />
-      <FileUploader />
+      <FileUploader onFileSelect={handleFileSelect} />
+      <Button
+        variant="contained"
+        color="success"
+        onClick={handleUpload}
+      >
+        Generate
+      </Button>
     </Modal>
   );
 }
