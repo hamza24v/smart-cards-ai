@@ -4,7 +4,7 @@ import { pricing } from "../constants";
 
 function Pricing() {
   return (
-    <section className="py-20 bg-gradient-to-r from-green-100">
+    <section className="py-20 w-full bg-gradient-to-r from-green-100">
       <h2 className="text-4xl font-bold text-center mb-12 text-gray-900 dark:text-white">
         Our Pricing Plans
       </h2>
