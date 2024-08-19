@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { useUser } from "@clerk/clerk-react";
+import { useRouter } from "next/navigation";
 import {
   SignInButton,
   SignedIn,
@@ -11,11 +12,17 @@ import {
 
 function Navbar() {
   const { isSignedIn } = useUser();
+  const router = useRouter();
 
   return (
     <div className="absolute top-0 w-full font-serif bg-green-50 shadow-lg p-5">
       <div className="flex justify-between hover:space-x-30 transition-all duration-500 items-center mx-4">
-        <p className="text-2xl font-semibold bg-gradient-to-r from-green-500 to-green-700 bg-clip-text text-transparent cursor-pointer">SmartCards AI</p>
+        <p
+          className="text-2xl font-semibold bg-gradient-to-r from-green-500 to-green-700 bg-clip-text text-transparent cursor-pointer"
+          onClick={() => router.push("/")}
+        >
+          SmartCards AI
+        </p>
         <div className="flex items-center space-x-2 ">
           {isSignedIn ? (
             <SignedIn>

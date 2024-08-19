@@ -1,9 +1,11 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import ContentUploader from "./ContentUploader";
+import { useRouter } from "next/navigation";
 
 function Hero() {
-  const [showModal, setShowModal] = useState(false)
+  const [showModal, setShowModal] = useState(false);
+  const router = useRouter();
 
   return (
     <section className="py-20 text-center space-y-5 items-center">
@@ -15,10 +17,13 @@ function Hero() {
         for you. SmartCards AI adapts to your learning needs, helping you focus
         on what matters most and retain knowledge more effectively.
       </p>
-      <button className='bg-green-400 text-white text-xl p-4 bg-gradient-to-r from-green-400 to-green-600 rounded-lg hover:scale-105 hover:ring-2 transition duration-300' onClick={() => setShowModal(true)}>
-        Generate Cards
+      <button
+        className="bg-green-400 text-white text-lg p-4 bg-gradient-to-r from-green-400 to-green-600 rounded-lg hover:scale-105 hover:ring-2 transition duration-300"
+        onClick={() => router.push('/generate')}
+      >
+        Get Started
       </button>
-      <ContentUploader showModal={showModal} setShowModal={setShowModal}/>
+      <ContentUploader showModal={showModal} setShowModal={setShowModal} />
     </section>
   );
 }
