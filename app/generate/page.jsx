@@ -3,25 +3,33 @@ import React, { useState } from "react";
 import FileUploader from "../components/FileUploader";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import DeckPreview from "../components/DeckPreview";
+import { useUser } from "@clerk/clerk-react";
+import { flashcards } from "../constants";
 
 function Generate() {
   const [link, setLink] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
-  let source;
-  if (link) source = link;
-  else if (selectedFile) source = selectedFile;
+  const [showCards, setShowCards] = useState(false);
+  const { isSignedIn } = useUser();
+
 
   const handleFileSelect = (file) => {
     setSelectedFile(file);
+    setLink("");
   };
 
   const handleGeneration = (content) => {
-    console.log("source: ", content)
-    // api logic 
+    console.log("source: ", content);
+    setShowCards(true);
+    // api logic
   };
+
+  const showGenerateButton = link.trim().length > 0 || selectedFile !== null;
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen space-y-5">
-      <h1 className="text-5xl font-serif font-bold text-green-500 mb-10">
+    <div className="flex flex-col items-center justify-center min-h-screen">
+      <h1 className="text-5xl text-center font-serif font-bold text-green-500 mb-10">
         Generate Flash Cards in Seconds...
       </h1>
       <FileUploader
@@ -34,19 +42,29 @@ function Generate() {
           label="Or enter a link"
           type="link"
           variant="outlined"
+          value={link}
           onChange={(e) => setLink(e.target.value)}
           className="w-1/2"
         />
       )}
 
-      {(link.length > 0 || selectedFile) && (
+      <div className="mt-4">
         <Button
           variant="contained"
           color="success"
-          onClick={() => handleGeneration(source)}
+          onClick={() => handleGeneration(link || selectedFile)}
+          style={{ visibility: showGenerateButton ? "visible" : "hidden" }}
         >
           Generate
         </Button>
+      </div>
+      {showCards && (
+        <DeckPreview
+          showModal={showCards}
+          setShowModal={setShowCards}
+          deck={flashcards}
+          signedIn={isSignedIn}
+        />
       )}
     </div>
   );

@@ -14,7 +14,7 @@ function FileUploader({ onFileSelect, selectedFile }) {
   };
 
   return (
-    <div className="w-1/2 h-1/2">
+    <div className="w-1/2 h-1/2 mb-5">
       {selectedFile ? (
         <div className="flex flex-row items-center p-4 border rounded-lg bg-gray-100 dark:bg-gray-700 border-green-500">
           <InsertDriveFileOutlinedIcon />

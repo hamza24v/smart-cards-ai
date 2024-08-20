@@ -26,8 +26,8 @@ export const pricing = [
     features: [
       "Up to 3 Deck of Cards",
       "Basic AI-powered flashcards",
-      "Up to 5 quiz modes a month"
-    ]
+      "Up to 5 quiz modes a month",
+    ],
   },
   {
     title: "Pro Plan",
@@ -37,6 +37,28 @@ export const pricing = [
       "Advanced AI-powered flashcards",
       "Unlimited quiz modes",
       "Deck sharing and collaboration",
-    ]
+    ],
   },
-]
+];
+
+export const flashcards = {
+  title: "Trivia",
+  cards: [
+    {
+      front: "What is the capital of France?",
+      back: "Paris",
+    },
+    {
+      front: "Who was the first person to climb Mount Everest?",
+      back: "Kang Xiang",
+    },
+    {
+      front: "Who was the last prophet in Islam?",
+      back: "Prophet Muhammad peace be upon him",
+    },
+    {
+      front: "What is the name of the longest river in the world?",
+      back: "Nile",
+    },
+  ],
+};
