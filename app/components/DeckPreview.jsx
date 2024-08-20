@@ -37,17 +37,17 @@ function DeckPreview({ showModal, setShowModal, deck,  saveDeck }) {
   };
 
 
-  if (!deck || !deck.cards) {
+  if (!deck || !deck.flashcards) {
     return null;
   }
 
   return (
     <Modal showModal={showModal} setShowModal={setShowModal}>
       <h1 className="text-3xl font-bold mb-4 text-center text-gray-900 dark:text-white">
-        {deck.title || "Untitled Deck"}
+        Preview: {deck.title || "Untitled Deck"}
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 h-auto gap-3 overflow-y-auto overflow-x-hidden max-h-96 pr-4">
-        {deck.cards.map((card, idx) => (
+        {deck.flashcards.map((card, idx) => (
           <div
             key={idx}
             className={`relative w-full h-40 perspective`}
@@ -59,7 +59,7 @@ function DeckPreview({ showModal, setShowModal, deck,  saveDeck }) {
               }`}
             >
               <div className="absolute inset-0 backface-hidden flex items-center justify-center bg-gray-100 dark:bg-gray-700 rounded-lg p-4">
-                <div className="max-h-32 overflow-y-auto w-full p-2">
+                <div className="max-h-32 overflow-y-auto overflow-x-hidden w-full p-2">
                   <p className="text-lg text-center font-semibold text-gray-700 dark:text-white">
                     {card.front || "No content"}
                   </p>

@@ -8,13 +8,15 @@ import { useDecks } from "../contexts/DeckContext";
 import { toast, ToastContainer } from "react-toastify";
 import { readFileAsText, isValidURL } from "../utils";
 import axios from "axios";
+import CircularProgress from "@mui/material/CircularProgress";
+import "react-toastify/dist/ReactToastify.css";
 
 function Generate() {
   const [link, setLink] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [deck, setDeck] = useState({ title: "", flashcards: [] });
-  const [showModal, setshowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const { createDeck } = useDecks();
   const handleFileSelect = (file) => {
     setSelectedFile(file);
@@ -24,7 +26,7 @@ function Generate() {
   const handleSaveDeck = async (deck) => {
     await createDeck({
       title: deck.title,
-      cards: deck.cards.map((card) => ({
+      cards: deck.flashcards.map((card) => ({
         front: card.front,
         back: card.back,
       })),
@@ -42,6 +44,7 @@ function Generate() {
           "Content-Type": "text/plain",
         },
       });
+      console.log("Generated flashcards:", response);
       return response.data;
     } catch (error) {
       console.error("Error generating flashcards:", error);
@@ -62,12 +65,15 @@ function Generate() {
       return;
     }
     const flashcardsData = await generateFlashcards(textContent);
-    setDeck({
-      title: flashcardsData.title,
-      flashcards: flashcardsData.flashcards,
-    });
+    console.log("Generated flashcards:", flashcardsData);
+    if (flashcardsData) {
+      setDeck({
+        title: flashcardsData.title,
+        flashcards: flashcardsData.flashcards,
+      });
+      setShowModal(true);
+    }
     setLoading(false);
-    setshowModal(true);
   };
 
   const showGenerateButton = link.trim().length > 0 || selectedFile !== null;
@@ -105,15 +111,21 @@ function Generate() {
           </Button>
         </div>
       ) : (
-        <button type="button" class="bg-green-500 ..." disabled>
-          <svg class="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24"></svg>
-          Generating...
-        </button>
+        <div className="mt-4">
+          <Button color="success" variant="contained">
+            <CircularProgress
+              size={20}
+              thickness={5}
+              className="text-white mr-2"
+            />
+            Generating...
+          </Button>
+        </div>
       )}
       {showModal && (
         <DeckPreview
           showModal={showModal}
-          setShowModal={setshowModal}
+          setShowModal={setShowModal}
           deck={deck}
           saveDeck={handleSaveDeck}
         />
