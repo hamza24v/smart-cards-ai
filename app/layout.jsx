@@ -3,6 +3,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import Navbar from './components/Navbar'
 const inter = Inter({ subsets: ["latin"] });
+import { DecksProvider } from './contexts/DeckContext';
 
 export const metadata = {
   title: "SmartCards AI",
@@ -14,10 +15,10 @@ export default function RootLayout({ children }) {
     <ClerkProvider>
       <html lang="en">
         <body className={inter.className}>
-          <>
+          <DecksProvider>
             <Navbar />
             {children}
-          </>
+          </DecksProvider>
         </body>
       </html>
     </ClerkProvider>

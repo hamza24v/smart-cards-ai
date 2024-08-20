@@ -60,5 +60,9 @@ export const flashcards = {
       front: "What is the name of the longest river in the world?",
       back: "Nile",
     },
+    {
+      front: "give me the first 50 words starting with 't'",
+      back: "tall, tame, tap, taproot, tapir, taper, tapering, tarnish, tarnishable, tarot, task, taste, tasteful, tasty, tattered, tattering, taunt, taunting, taut, tauntful, tax, taxation, taxable, taxi, taxicab, taxidermy, taxidermist, taxidermyst, taxing"
+    }
   ],
 };
