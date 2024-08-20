@@ -4,25 +4,70 @@ import FileUploader from "../components/FileUploader";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import DeckPreview from "../components/DeckPreview";
-import { useUser } from "@clerk/clerk-react";
-import { flashcards } from "../constants";
+import { useDecks } from "../contexts/DeckContext";
+import { toast, ToastContainer } from "react-toastify";
+import { readFileAsText, isValidURL } from "../utils";
+import axios from "axios";
 
 function Generate() {
   const [link, setLink] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
-  const [showCards, setShowCards] = useState(false);
-  const { isSignedIn } = useUser();
-
-
+  const [loading, setLoading] = useState(false);
+  const [deck, setDeck] = useState({ title: "", flashcards: [] });
+  const [showModal, setshowModal] = useState(false);
+  const { createDeck } = useDecks();
   const handleFileSelect = (file) => {
     setSelectedFile(file);
     setLink("");
   };
 
-  const handleGeneration = (content) => {
-    console.log("source: ", content);
-    setShowCards(true);
-    // api logic
+  const handleSaveDeck = async (deck) => {
+    await createDeck({
+      title: deck.title,
+      cards: deck.cards.map((card) => ({
+        front: card.front,
+        back: card.back,
+      })),
+    });
+    setLink("");
+    toast.success("Deck saved successfully!");
+    setSelectedFile(null);
+    setShowModal(false);
+  };
+
+  const generateFlashcards = async (content) => {
+    try {
+      const response = await axios.post("/api/generate", content, {
+        headers: {
+          "Content-Type": "text/plain",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error generating flashcards:", error);
+      return null;
+    }
+  };
+
+  const handleGenerationClick = async (content) => {
+    setLoading(true);
+    let textContent;
+    if (content instanceof File || content instanceof Blob) {
+      textContent = await readFileAsText(content);
+    } else if (typeof content === "string" && isValidURL(content)) {
+      textContent = content;
+    }
+    if (!textContent) {
+      toast.error("Please provide a valid text or link.");
+      return;
+    }
+    const flashcardsData = await generateFlashcards(textContent);
+    setDeck({
+      title: flashcardsData.title,
+      flashcards: flashcardsData.flashcards,
+    });
+    setLoading(false);
+    setshowModal(true);
   };
 
   const showGenerateButton = link.trim().length > 0 || selectedFile !== null;
@@ -48,24 +93,32 @@ function Generate() {
         />
       )}
 
-      <div className="mt-4">
-        <Button
-          variant="contained"
-          color="success"
-          onClick={() => handleGeneration(link || selectedFile)}
-          style={{ visibility: showGenerateButton ? "visible" : "hidden" }}
-        >
-          Generate
-        </Button>
-      </div>
-      {showCards && (
+      {!loading ? (
+        <div className="mt-4">
+          <Button
+            variant="contained"
+            color="success"
+            onClick={() => handleGenerationClick(link || selectedFile)}
+            style={{ visibility: showGenerateButton ? "visible" : "hidden" }}
+          >
+            Generate
+          </Button>
+        </div>
+      ) : (
+        <button type="button" class="bg-green-500 ..." disabled>
+          <svg class="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24"></svg>
+          Generating...
+        </button>
+      )}
+      {showModal && (
         <DeckPreview
-          showModal={showCards}
-          setShowModal={setShowCards}
-          deck={flashcards}
-          signedIn={isSignedIn}
+          showModal={showModal}
+          setShowModal={setshowModal}
+          deck={deck}
+          saveDeck={handleSaveDeck}
         />
       )}
+      <ToastContainer />
     </div>
   );
 }

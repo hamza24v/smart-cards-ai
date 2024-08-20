@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import CloseIcon from "@mui/icons-material/Close";
+import { SignInButton, useUser } from "@clerk/clerk-react";
+import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 
 // pop up modal
 function Modal({ children, showModal, setShowModal }) {
@@ -20,14 +22,11 @@ function Modal({ children, showModal, setShowModal }) {
     </div>
   );
 }
-function DeckPreview({ showModal, setShowModal, deck, signedIn }) {
+function DeckPreview({ showModal, setShowModal, deck,  saveDeck }) {
+  const { isSignedIn } = useUser();
   const [flippedStates, setFlippedStates] = useState(
-    Array(deck.cards.length).fill(false)
+    Array(deck.flashcards.length).fill(false)
   );
-  const handleSaveDeck = () => {
-    console.log("Deck saved!");
-    setShowModal(false);
-  };
 
   const handleFlip = (index) => {
     setFlippedStates((prevStates) => {
@@ -37,15 +36,17 @@ function DeckPreview({ showModal, setShowModal, deck, signedIn }) {
     });
   };
 
+
   if (!deck || !deck.cards) {
     return null;
   }
+
   return (
     <Modal showModal={showModal} setShowModal={setShowModal}>
       <h1 className="text-3xl font-bold mb-4 text-center text-gray-900 dark:text-white">
         {deck.title || "Untitled Deck"}
       </h1>
-      <div className="space-y-6 overflow-y-auto overflow-x-hidden max-h-96 pr-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 h-auto gap-3 overflow-y-auto overflow-x-hidden max-h-96 pr-4">
         {deck.cards.map((card, idx) => (
           <div
             key={idx}
@@ -58,23 +59,43 @@ function DeckPreview({ showModal, setShowModal, deck, signedIn }) {
               }`}
             >
               <div className="absolute inset-0 backface-hidden flex items-center justify-center bg-gray-100 dark:bg-gray-700 rounded-lg p-4">
-                <p className="text-lg text-center font-semibold text-gray-700 dark:text-white">
-                  {card.front || "No content"}
-                </p>
+                <div className="max-h-32 overflow-y-auto w-full p-2">
+                  <p className="text-lg text-center font-semibold text-gray-700 dark:text-white">
+                    {card.front || "No content"}
+                  </p>
+                </div>
               </div>
               <div className="absolute inset-0 backface-hidden rotate-y-180 flex items-center justify-center bg-gray-300 dark:bg-gray-600 rounded-lg p-4">
-                <p className="text-lg font-semibold text-gray-700 dark:text-white">
-                  {card.back || "No content"}
-                </p>
+                <div className="max-h-32 overflow-y-auto w-full p-2">
+                  <p className="text-lg font-semibold text-gray-700 dark:text-white">
+                    {card.back || "No content"}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         ))}
       </div>
       <div className="relative bottom-0 mt-3 bg-white border-gray-300 w-full flex justify-center">
-        <Button variant="contained" color="success" onClick={handleSaveDeck} className="w-full">
-          {signedIn ? "Save Deck" : "Sign in to save"}
+        {isSignedIn ? (
+        <Button
+          variant="contained"
+          color="success"
+          onClick={() => saveDeck(deck) }
+          className="w-full"
+        >
+          Save Deck
+          <span>
+            <DownloadOutlinedIcon />
+          </span>
         </Button>
+        ) : (
+        <SignInButton>
+          <Button variant="contained" color="success" className="w-full">
+            Sign in to save
+          </Button>
+        </SignInButton>
+        )}
       </div>
     </Modal>
   );
