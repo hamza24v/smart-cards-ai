@@ -16,7 +16,7 @@ function Hero() {
         on what matters most and retain knowledge more effectively.
       </p>
       <button
-        className="bg-green-400 text-white text-lg p-4 bg-gradient-to-r from-green-400 to-green-600 rounded-lg hover:scale-105 hover:ring-2 transition duration-300"
+        className="bg-green-400 text-white text-md p-4 bg-gradient-to-r from-green-400 to-green-600 rounded-lg hover:scale-105 hover:ring-2 transition duration-300"
         onClick={() => router.push('/generate')}
       >
         Get Started

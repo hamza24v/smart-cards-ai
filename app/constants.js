@@ -43,7 +43,7 @@ export const pricing = [
 
 export const flashcards = {
   title: "Trivia",
-  cards: [
+  flashcards: [
     {
       front: "What is the capital of France?",
       back: "Paris",
