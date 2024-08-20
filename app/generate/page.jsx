@@ -4,7 +4,7 @@ import FileUploader from "../components/FileUploader";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import DeckPreview from "../components/DeckPreview";
-import { useDecks } from "../contexts/DeckContext";
+import { useDecks } from "../contexts/DecksContext";
 import { toast, ToastContainer } from "react-toastify";
 import { readFileAsText, isValidURL } from "../utils";
 import axios from "axios";

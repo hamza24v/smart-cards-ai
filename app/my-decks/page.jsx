@@ -1,11 +1,13 @@
-import React from 'react'
+import React from 'react';
+import DeckGrid from '../components/DeckGrid';
 
-function Decks() {
+const MyDecks = () => {
   return (
-    <div className='flex flex-col items-center justify-center min-h-screen'>
-      Welcome to your deck
-    </div> 
-  )
-}
+      <div className="container mx-auto my-8">
+        <h1 className="text-3xl font-bold text-center mb-8">My Decks</h1>
+        <DeckGrid />
+      </div>
+  );
+};
 
-export default Decks
+export default MyDecks;

@@ -3,7 +3,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import Navbar from './components/Navbar'
 const inter = Inter({ subsets: ["latin"] });
-import { DecksProvider } from './contexts/DeckContext';
+import { DecksProvider } from './contexts/DecksContext';
 
 export const metadata = {
   title: "SmartCards AI",
