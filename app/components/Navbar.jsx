@@ -23,11 +23,19 @@ function Navbar() {
         >
           SmartCards AI
         </p>
-        <div className="flex items-center space-x-2 ">
+        <div className="flex items-center space-x-5 ">
           {isSignedIn ? (
-            <SignedIn>
-              <UserButton className="w-20 h-20" />
-            </SignedIn>
+            <>
+              <button
+                className="text-lg cursor-pointer p-2 hover:bg-green-100 rounded-lg"
+                onClick={() => router.push("/my-decks")}
+              >
+                My Decks
+              </button>
+              <SignedIn>
+                <UserButton />
+              </SignedIn>
+            </>
           ) : (
             <>
               <div className="hover:bg-green-100 font-serif text-lg rounded-lg p-2">

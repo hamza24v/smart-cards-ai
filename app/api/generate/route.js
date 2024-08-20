@@ -1,5 +1,5 @@
-import {NextResponse} from 'next/server'
-import OpenAI from 'openai'
+import { NextResponse } from "next/server";
+import OpenAI from "openai";
 
 const systemPrompt = `
 "You are SmartCard AI, an intelligent assistant that helps users create effective flashcards for studying. Your task is to analyze content provided by the user and generate clear, concise flashcards that highlight key concepts, definitions, and important details.
@@ -19,23 +19,22 @@ Return in the following JSON format:
 
     }]
 }
-`
+`;
 
-export async function POST(req){
-    const openai = OpenAI()
-    const data = await req.text()
+export async function POST(req) {
+  const openai = OpenAI();
+  const data = await req.text();
 
-    const completion = await openai.chat.completion.create({
-        messages:[
-            {role: "system", content: systemPrompt},
-            {role: 'user', content: data},
+  const completion = await openai.chat.completion.create({
+    messages: [
+      { role: "system", content: systemPrompt },
+      { role: "user", content: data },
+    ],
+    model: "gpt-4o-mini",
+    response_format: { type: "json-object" },
+  });
 
-        ],
-        model: "gpt-4o"
-        response_format: {type: 'json-object'}, 
-    })
+  const { flashcards } = JSON.parse(completion.choices[0].message.content);
 
-    const flashcards = JSON.parse(completion.choices[0].message.content)
-
-    return NextResponse.json{flashcards.flashcard}
+  return NextResponse.json(flashcards);
 }
