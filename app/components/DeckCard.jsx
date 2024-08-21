@@ -1,11 +1,19 @@
-import React from 'react';
-import { Card, CardContent, Typography, LinearProgress, Button, IconButton } from '@mui/material';
-import { Edit, Delete, Share } from '@mui/icons-material';
-import { useDecks } from '../contexts/DecksContext';
+import React from "react";
+import {
+  Card,
+  CardContent,
+  Typography,
+  LinearProgress,
+  Button,
+  IconButton,
+} from "@mui/material";
+import { Edit, Delete, Share } from "@mui/icons-material";
+import { useDecks } from "../contexts/DecksContext";
+import { useRouter } from "next/navigation";
 
 const DeckCard = ({ deck }) => {
   const { deleteDeck } = useDecks();
-
+  const router = useRouter();
   const handleDelete = () => {
     deleteDeck(deck.id);
   };
@@ -16,9 +24,20 @@ const DeckCard = ({ deck }) => {
         <Typography variant="h5" component="div">
           {deck.title}
         </Typography>
-        <LinearProgress variant="determinate" value={deck.progress || 0} className="my-4" />
+        <LinearProgress
+          variant="determinate"
+          value={deck.progress || 0}
+          className="my-4"
+        />
         <div className="flex justify-between">
-          <Button variant="contained" color="success">Start Studying</Button>
+          <Button
+            variant="contained"
+            color="success"
+            onClick={() => router.push('/study/' + deck.id)}
+          >
+            Start Studying
+          </Button>
+
           <div>
             <IconButton aria-label="edit">
               <Edit />

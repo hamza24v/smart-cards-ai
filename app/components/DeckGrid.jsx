@@ -12,13 +12,11 @@ const DeckGrid = () => {
       {decks.map((deck) => (
         <DeckCard key={deck.id} deck={deck} />
       ))}
-      <div className="flex items-center justify-center border-2 cursor-pointer border-dashed border-gray-400 rounded-lg p-4">
-        <button
-          className="text-gray-600 text-xl"
-          onClick={router.push("/generate")}
-        >
-          + Add New Deck
-        </button>
+      <div
+        onClick={() => router.push("/generate")}
+        className="flex items-center justify-center border-2 cursor-pointer border-dashed border-gray-400 rounded-lg p-4"
+      >
+        <button className="text-gray-600 text-xl">+ Add New Deck</button>
       </div>
     </div>
   );

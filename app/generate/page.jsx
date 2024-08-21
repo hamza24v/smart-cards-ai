@@ -26,7 +26,7 @@ function Generate() {
   const handleSaveDeck = async (deck) => {
     await createDeck({
       title: deck.title,
-      cards: deck.flashcards.map((card) => ({
+      flashcards: deck.flashcards.map((card) => ({
         front: card.front,
         back: card.back,
       })),
@@ -81,7 +81,7 @@ function Generate() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <h1 className="text-5xl text-center font-serif font-bold text-green-500 mb-10">
-        Generate Flash Cards in Seconds...
+        Generate Flash Cards in Seconds
       </h1>
       <FileUploader
         onFileSelect={handleFileSelect}
