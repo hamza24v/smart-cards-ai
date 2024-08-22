@@ -1,12 +1,14 @@
 import React from "react";
 import CircularProgress from "@mui/material/CircularProgress";
-
+import Typography from "@mui/material/Typography";
 function Loading() {
   return (
-    <p className="flex text-2xl justify-center items-center min-h-screen">
-      <CircularProgress size={20} thickness={5} className="text-green-500 mr-2" />
-      Loading...
-    </p>
+    <div className="flex flex-col justify-center items-center min-h-screen">
+      <CircularProgress sx={{ color: "#4CAF50" }} />
+      <Typography variant="h6" sx={{ mt: 2, color: "#4CAF50" }}>
+        Loading...
+      </Typography>
+    </div>
   );
 }
 

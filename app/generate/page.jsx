@@ -6,7 +6,7 @@ import TextField from "@mui/material/TextField";
 import DeckPreview from "../components/DeckPreview";
 import { useDecks } from "../contexts/DecksContext";
 import { toast, ToastContainer } from "react-toastify";
-import { readFileAsText, isValidURL } from "../utils";
+import { readFileAsText, isValidURL } from "../../utils/input-validation";
 import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
 import "react-toastify/dist/ReactToastify.css";
@@ -18,6 +18,7 @@ function Generate() {
   const [deck, setDeck] = useState({ title: "", flashcards: [] });
   const [showModal, setShowModal] = useState(false);
   const { createDeck } = useDecks();
+  
   const handleFileSelect = (file) => {
     setSelectedFile(file);
     setLink("");

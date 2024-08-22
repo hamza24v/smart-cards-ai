@@ -22,7 +22,8 @@ export const features = [
 export const pricing = [
   {
     title: "Free Plan",
-    price: "0",
+    price: 0,
+    price_id: "",
     features: [
       "Up to 3 Deck of Cards",
       "Basic AI-powered flashcards",
@@ -31,7 +32,8 @@ export const pricing = [
   },
   {
     title: "Pro Plan",
-    price: "9.99",
+    price: 9.99,
+    price_id: "price_1PqLqKRu5fL7KkEU6jYaQweS",
     features: [
       "Unlimited Deck of Cards",
       "Advanced AI-powered flashcards",

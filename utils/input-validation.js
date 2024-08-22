@@ -1,4 +1,5 @@
-function readFileAsText(file) {
+
+export const readFileAsText = (file) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
 
@@ -12,11 +13,11 @@ function readFileAsText(file) {
 
     reader.readAsText(file);
   });
-}
+};
 
-function isValidURL(url) {
+export const isValidURL = (url) => {
   const urlPattern = /^(http|https):\/\/[^ "]+$/;
   return urlPattern.test(url);
-}
+};
 
-export { readFileAsText, isValidURL };
+
