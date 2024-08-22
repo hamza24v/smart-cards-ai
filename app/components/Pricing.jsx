@@ -13,7 +13,7 @@ function Pricing() {
     setLoading(true);
     const response = await axios.post(
       "/api/checkout_sessions",
-      { price_id: "price_1PqhQSRu5fL7KkEU4w6qYcWs" },
+      { price_id },
       {
         headers: {
           origin: process.env.NEXT_PUBLIC_URL,

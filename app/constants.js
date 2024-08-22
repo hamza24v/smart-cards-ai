@@ -25,46 +25,32 @@ export const pricing = [
     price: 0,
     price_id: "",
     features: [
-      "Up to 3 Deck of Cards",
+      "Up to 5 Deck of Cards",
       "Basic AI-powered flashcards",
-      "Up to 5 quiz modes a month",
+      'Access to "My Decks" page',
+      "Exporting options to PDF",
     ],
   },
   {
-    title: "Pro Plan",
-    price: 9.99,
+    title: "Basic Plan",
+    price: 4.99,
     price_id: "price_1PqLqKRu5fL7KkEU6jYaQweS",
     features: [
       "Unlimited Deck of Cards",
       "Advanced AI-powered flashcards",
-      "Unlimited quiz modes",
+      "Export to CSV, PDF and more",
       "Deck sharing and collaboration",
     ],
   },
+  {
+    title: "Premium Plan",
+    price: "9.99",
+    price_id: "price_1PqiKiRu5fL7KkEU90IxfaUx",
+    features: [
+      "Everthing in the Basic Plan",
+      "Early access to new features (e.g., quizzing game)",
+      "Premium support and resources",
+      "AI-driven tutoring or recommendations",
+    ]
+  }
 ];
-
-export const flashcards = {
-  title: "Trivia",
-  flashcards: [
-    {
-      front: "What is the capital of France?",
-      back: "Paris",
-    },
-    {
-      front: "Who was the first person to climb Mount Everest?",
-      back: "Kang Xiang",
-    },
-    {
-      front: "Who was the last prophet in Islam?",
-      back: "Prophet Muhammad peace be upon him",
-    },
-    {
-      front: "What is the name of the longest river in the world?",
-      back: "Nile",
-    },
-    {
-      front: "give me the first 50 words starting with 't'",
-      back: "tall, tame, tap, taproot, tapir, taper, tapering, tarnish, tarnishable, tarot, task, taste, tasteful, tasty, tattered, tattering, taunt, taunting, taut, tauntful, tax, taxation, taxable, taxi, taxicab, taxidermy, taxidermist, taxidermyst, taxing"
-    }
-  ],
-};

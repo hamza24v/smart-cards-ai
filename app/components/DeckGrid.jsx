@@ -12,7 +12,6 @@ const DeckGrid = () => {
   const [deckIdToDelete, setDeckIdToDelete] = useState(null);
 
   const confirmDelete = (deckId) => {
-    console.log("Deleting deck:", deckId);
     deleteDeck(deckId);
     setShowModal(false);
   };
