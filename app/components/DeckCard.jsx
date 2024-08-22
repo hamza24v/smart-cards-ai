@@ -7,16 +7,11 @@ import {
   Button,
   IconButton,
 } from "@mui/material";
-import { Edit, Delete, Share } from "@mui/icons-material";
-import { useDecks } from "../contexts/DecksContext";
+import { Edit, Delete } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
 
-const DeckCard = ({ deck }) => {
-  const { deleteDeck } = useDecks();
+const DeckCard = ({ deck, handleDelete }) => {
   const router = useRouter();
-  const handleDelete = () => {
-    deleteDeck(deck.id);
-  };
 
   return (
     <Card className="max-w-sm mx-auto my-4">
@@ -29,7 +24,7 @@ const DeckCard = ({ deck }) => {
           value={deck.progress || 0}
           className="my-4"
         />
-        <div className="flex justify-between">
+        <div className="flex sm:flex-row flex-col justify-between ">
           <Button
             variant="contained"
             color="success"
@@ -38,17 +33,12 @@ const DeckCard = ({ deck }) => {
             Start Studying
           </Button>
 
-          <div>
             <IconButton aria-label="edit">
               <Edit />
             </IconButton>
-            <IconButton aria-label="delete" onClick={handleDelete}>
+            <IconButton aria-label="delete" onClick={() => handleDelete(deck.id)}>
               <Delete />
             </IconButton>
-            <IconButton aria-label="share">
-              <Share />
-            </IconButton>
-          </div>
         </div>
       </CardContent>
     </Card>
