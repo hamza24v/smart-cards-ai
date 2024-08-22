@@ -5,10 +5,6 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2022-11-15",
 });
 
-const formatAmountForStripe = (amount) => {
-  return Math.round(amount * 100);
-};
-
 const createCheckoutSession = async (req) => {
   const { price_id } = await req.json();
   console.log("price_id:", price_id);
@@ -37,7 +33,7 @@ export async function POST(req) {
     const checkoutSession = await createCheckoutSession(req);
     return NextResponse.json(checkoutSession, { status: 200 });
   } catch (error) {
-    console.error("Error creating checkout session:", error);
+    console.error("Error creating checkout session:", error.message);
     return new NextResponse(
       JSON.stringify({ error: { message: error.message } }),
       { status: 500 }

@@ -15,19 +15,19 @@ function Navbar() {
   const router = useRouter();
 
   return (
-    <div className="absolute top-0 w-full font-serif bg-green-50 shadow-lg p-5">
-      <div className="flex justify-between hover:space-x-30 transition-all duration-500 items-center mx-4">
+    <div className="fixed top-0 w-full bg-gradient-to-r from-green-50 to-green-100 shadow-md p-4 z-50">
+      <div className="flex justify-between items-center max-w-7xl mx-auto">
         <p
-          className="text-2xl font-semibold bg-gradient-to-r from-green-500 to-green-700 bg-clip-text text-transparent cursor-pointer"
+          className="text-3xl font-bold bg-gradient-to-r from-green-500 to-green-700 bg-clip-text text-transparent cursor-pointer"
           onClick={() => router.push("/")}
         >
           SmartCards AI
         </p>
-        <div className="flex items-center space-x-5 ">
+        <div className="flex items-center space-x-6">
           {isSignedIn ? (
             <>
               <button
-                className="text-lg cursor-pointer p-2 hover:bg-green-100 rounded-lg"
+                className="text-lg font-medium text-gray-500 hover:text-gray-800 p-2 transition-colors duration-300"
                 onClick={() => router.push("/my-decks")}
               >
                 My Decks
@@ -38,15 +38,17 @@ function Navbar() {
             </>
           ) : (
             <>
-              <div className="hover:bg-green-100 font-serif text-lg rounded-lg p-2">
-                <SignedOut>
-                  <SignInButton />
-                </SignedOut>
-              </div>
-              <div className="bg-gray-500 font-serif text-lg text-white hover:bg-gray-600 rounded-lg p-2">
-                <SignedOut>
-                  <SignUpButton />
-                </SignedOut>
+              <div className="flex items-center space-x-4">
+                <div className="text-lg font-medium text-gray-700 hover:bg-green-200 hover:text-gray-900 rounded-lg p-2 transition-all duration-300 cursor-pointer">
+                  <SignedOut>
+                    <SignInButton />
+                  </SignedOut>
+                </div>
+                <div className="bg-green-600 text-white text-lg font-medium hover:bg-green-700 rounded-lg p-2 transition-all duration-300 cursor-pointer">
+                  <SignedOut>
+                    <SignUpButton />
+                  </SignedOut>
+                </div>
               </div>
             </>
           )}

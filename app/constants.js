@@ -34,7 +34,7 @@ export const pricing = [
   {
     title: "Basic Plan",
     price: 4.99,
-    price_id: "price_1PqLqKRu5fL7KkEU6jYaQweS",
+    price_id: "price_1PqiJuRu5fL7KkEUGqbCEzZN",
     features: [
       "Unlimited Deck of Cards",
       "Advanced AI-powered flashcards",
@@ -47,7 +47,7 @@ export const pricing = [
     price: "9.99",
     price_id: "price_1PqiKiRu5fL7KkEU90IxfaUx",
     features: [
-      "Everthing in the Basic Plan",
+      "Everthing in the Basic Plan plu",
       "Early access to new features (e.g., quizzing game)",
       "Premium support and resources",
       "AI-driven tutoring or recommendations",

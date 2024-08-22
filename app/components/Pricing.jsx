@@ -7,10 +7,16 @@ import CircularProgress from "@mui/material/CircularProgress";
 import axios from "axios";
 
 function Pricing() {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(
+    Array(pricing.length).fill(false)
+  );
 
-  const handleSubmit = async (price_id) => {
-    setLoading(true);
+  const handleSubmit = async (price_id, idx) => {
+    setLoading((prevStates) => {
+      const newStates = [...prevStates];
+      newStates[idx] = true;
+      return newStates;
+    });
     const response = await axios.post(
       "/api/checkout_sessions",
       { price_id },
@@ -26,20 +32,23 @@ function Pricing() {
     const { error } = await stripe.redirectToCheckout({
       sessionId: checkoutSessionJson.id,
     });
-
+    setLoading((prevStates) => {
+      const newStates = [...prevStates];
+      newStates[idx] = false;
+      return newStates;
+    });
     if (error) {
       console.warn(error.message);
     }
-    setLoading(false);
   };
 
   return (
     <section className="py-20 w-full bg-gradient-to-r from-green-100">
-      <h2 className="text-4xl font-bold text-center mb-12 text-gray-900 dark:text-white">
+      <h2 className="text-4xl font-bold text-center mb-12 bg-green-gradient bg-clip-text text-transparent">
         Our Pricing Plans
       </h2>
       <div className="flex flex-wrap justify-center gap-6 ">
-        {pricing.map((plan) => (
+        {pricing.map((plan, idx) => (
           <Card
             className="max-w-sm flex flex-col justify-between shadow-lg hover:scale-105 duration-300"
             key={plan.title}
@@ -49,8 +58,8 @@ function Pricing() {
                 {plan.title}
               </h5>
               <div className="flex items-baseline text-gray-900 dark:text-white">
-                <span className="text-3xl font-semibold">$</span>
-                <span className="text-5xl font-extrabold tracking-tight">
+                <span className="text-3xl font-semibold ">$</span>
+                <span className="text-5xl font-extrabold tracking-tight bg-green-gradient bg-clip-text text-transparent">
                   {plan.price}
                 </span>
                 <span className="ml-1 text-xl font-normal text-gray-500 dark:text-gray-400">
@@ -80,11 +89,11 @@ function Pricing() {
               </ul>
             </div>
             {plan.price > 0 ? (
-              !loading ? (
+              !loading[idx] ? (
                 <button
                   type="button"
                   className="mt-auto inline-flex w-full justify-center rounded-lg bg-cyan-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-cyan-700 focus:outline-none focus:ring-4 focus:ring-cyan-200 dark:focus:ring-cyan-900"
-                  onClick={() => handleSubmit(plan.price_id)}
+                  onClick={() => handleSubmit(plan.price_id, idx)}
                 >
                   Choose plan
                 </button>
@@ -92,7 +101,7 @@ function Pricing() {
                 <button
                   type="button"
                   className="mt-auto inline-flex w-full justify-center rounded-lg bg-cyan-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-cyan-700 focus:outline-none focus:ring-4 focus:ring-cyan-200 dark:focus:ring-cyan-900"
-                  onClick={() => handleSubmit(plan.price_id)}
+                  onClick={() => handleSubmit(plan.price_id, idx)}
                 >
                   <CircularProgress
                     size={20}
