@@ -9,8 +9,8 @@ import { getFirestore } from "firebase/firestore"
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH,
-  projectId: "smart-cards-ai-35be6",
-  storageBucket: "smart-cards-ai-35be6.appspot.com",
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECTID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_SB,
   messagingSenderId: "917495405365",
   appId: "1:917495405365:web:06ecee44da124175da0a7c",
   measurementId: "G-0VR67RC25C"
