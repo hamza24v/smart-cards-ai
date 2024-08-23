@@ -6,10 +6,12 @@ import TextField from "@mui/material/TextField";
 import DeckPreview from "../components/DeckPreview";
 import { useDecks } from "../contexts/DecksContext";
 import { toast, ToastContainer } from "react-toastify";
-import { readFileAsText, isValidURL } from "../../utils/input-validation";
+import { readFileAsText, isValidURL, chunkText } from "../../utils/input-validation";
 import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
 import "react-toastify/dist/ReactToastify.css";
+
+const MAX_CHUNK_LENGTH = 128000
 
 function Generate() {
   const [link, setLink] = useState("");
@@ -39,25 +41,40 @@ function Generate() {
   };
 
   const generateFlashcards = async (content) => {
-    try {
-      const response = await axios.post("/api/generate", content, {
-        headers: {
-          "Content-Type": "text/plain",
-        },
-      });
-      console.log("Generated flashcards:", response);
-      return response.data;
-    } catch (error) {
-      console.error("Error generating flashcards:", error);
-      return null;
+    const textChunks = chunkText(content, MAX_CHUNK_LENGTH);
+    let combinedFlashcards = [];
+    let deckTitle = "";
+
+    for (const chunk of textChunks) {
+      try {
+        const response = await axios.post("/api/generate", chunk, {
+          headers: {
+            "Content-Type": "text/plain",
+          },
+        });
+        
+        combinedFlashcards = combinedFlashcards.concat(response.data.flashcards);
+        deckTitle = response.data.title;
+      } catch (error) {
+        console.error("Error generating flashcards:", error);
+        toast.error("Failed to generate flashcards for a chunk.");
+        return null;
+      }
     }
+
+    return {
+      title: deckTitle,
+      flashcards: combinedFlashcards,
+    };
   };
 
   const handleGenerationClick = async (content) => {
     setLoading(true);
     let textContent;
     if (content instanceof File || content instanceof Blob) {
+      console.log("file: ", content)
       textContent = await readFileAsText(content);
+      console.log("text: ", textContent)
     } else if (typeof content === "string" && isValidURL(content)) {
       textContent = content;
     }
@@ -80,7 +97,7 @@ function Generate() {
   const showGenerateButton = link.trim().length > 0 || selectedFile !== null;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-custom-gradient w-full">
       <h1 className="text-5xl text-center font-bold text-green-500 mb-10">
         Generate Flash Cards in Seconds
       </h1>
