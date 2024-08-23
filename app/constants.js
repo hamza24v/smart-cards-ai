@@ -45,7 +45,7 @@ export const pricing = [
   {
     title: "Premium Plan",
     price: "9.99",
-    price_id: "price_1PqiKiRu5fL7KkEU90IxfaUx",
+    price_id: "price_1PqmSJRu5fL7KkEUEZZSi64w",
     features: [
       "Everthing in the Basic Plan plu",
       "Early access to new features (e.g., quizzing game)",

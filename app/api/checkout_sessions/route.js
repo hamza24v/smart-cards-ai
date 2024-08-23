@@ -7,13 +7,12 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 
 const createCheckoutSession = async (req) => {
   const { price_id } = await req.json();
-  console.log("price_id:", price_id);
   const params = {
     mode: "subscription",
     payment_method_types: ["card"],
     line_items: [
       {
-        price: "price_1PqLqKRu5fL7KkEU6jYaQweS",
+        price: price_id,
         quantity: 1,
       },
     ],
