@@ -22,19 +22,19 @@ const StudyDeck = () => {
   }
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % deck.cards.length);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % deck.flashcards.length);
   };
 
   const handlePrevious = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + deck.cards.length) % deck.cards.length);
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + deck.flashcards.length) % deck.flashcards.length);
   };
 
-  const { front, back } = deck.cards[currentIndex];
+  const { front, back } = deck.flashcards[currentIndex];
 
 
   return (
     <div className="flex flex-col min-h-screen justify-center items-center container mx-auto my-8">
-      <h1 className="text-3xl font-serif font-bold text-green-500 text-center mb-8">{deck.title}</h1>
+      <h1 className="text-3xl font-bold text-green-500 text-center mb-8">{deck.title}</h1>
       {front && back && <Flashcard frontContent={front} backContent={back} />}
       <div className="flex justify-between mt-8 w-1/4">
         <Button variant="outlined" color='success' onClick={handlePrevious} className='w-[90px]'>

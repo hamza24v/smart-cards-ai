@@ -32,14 +32,16 @@ function Pricing() {
     const { error } = await stripe.redirectToCheckout({
       sessionId: checkoutSessionJson.id,
     });
+   
+    if (error) {
+      console.warn(error.message);
+    }
+
     setLoading((prevStates) => {
       const newStates = [...prevStates];
       newStates[idx] = false;
       return newStates;
     });
-    if (error) {
-      console.warn(error.message);
-    }
   };
 
   return (

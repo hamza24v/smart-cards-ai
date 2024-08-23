@@ -28,19 +28,19 @@ function DeckPreview({ showModal, setShowModal, deck,  saveDeck }) {
       <h1 className="text-3xl font-bold mb-4 text-center text-gray-900 dark:text-white">
         Preview: {deck.title || "Untitled Deck"}
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 h-auto gap-3 overflow-y-auto overflow-x-hidden max-h-96 pr-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 h-auto gap-3  overflow-y-auto overflow-x-hidden max-h-96 pr-4">
         {deck.flashcards.map((card, idx) => (
           <div
             key={idx}
-            className={`relative w-full h-40 perspective`}
+            className={`relative w-full h-40 perspective `}
             onClick={() => handleFlip(idx)}
           >
             <div
-              className={`absolute inset-0 transition-transform transform-style-3d duration-500 ${
+              className={`absolute inset-0 transition-transform transform-style-3d duration-500  ${
                 flippedStates[idx] ? "rotate-y-180" : ""
               }`}
             >
-              <div className="absolute inset-0 backface-hidden flex items-center justify-center bg-gray-100 dark:bg-gray-700 rounded-lg p-4">
+              <div className="absolute inset-0 backface-hidden flex items-center justify-center bg-gray-100  dark:bg-gray-700 rounded-lg p-4">
                 <div className="max-h-32 overflow-y-auto overflow-x-hidden w-full p-2">
                   <p className="text-lg text-center font-semibold text-gray-700 dark:text-white">
                     {card.front || "No content"}
